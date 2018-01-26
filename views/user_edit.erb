@@ -24,25 +24,37 @@
   <header class="header">
       <ol class="breadcrumb" style="display: inline-block;">
         <li class="breadcrumb-item active">
-          Menu
+          User Edit
         </li>
       </ol>
   </header><!-- .header -->
 </div><!-- .container -->
 
 <div class="container">
-  <div class="card">
-    <h3 class="card-header">Menu</h3>
-    <div class="card-block">
-      <h4 class="card-title">コンテンツへの移動</h4>
-      <div class="row">
-        <div class="col">
-          <a class="btn btn-info btn-lg btn-block" href="/index" role="button">食品一覧</a>
-        </div><!-- .col -->
-        <div class="col">
-          <a class="btn btn-info btn-lg btn-block" href="/new_food" role="button">食品追加</a>
-        </div><!-- .col -->
-      </div><!-- .row -->
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#userDeleteModal">
+  ユーザー削除
+</button>
+</div><!-- .container -->
+
+<!-- modal -->
+<div class="modal fade" id="userDeleteModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">ユーザー削除</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>本当にユーザーを削除してもよろしいですか?</p>
+      </div>
+      <div class="modal-footer">
+        <form class="" action="/user/delete" method="post">
+          <button type="submit" class="btn btn-danger delete-user">削除</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-</div><!-- .container -->
+</div>

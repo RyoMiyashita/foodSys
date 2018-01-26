@@ -24,15 +24,6 @@ get '/' do
   redirect '/login'
 end
 
-get '/menu' do
-  if session[:login_flag] == true
-    @userName = session[:user_name]
-    erb :menu
-  else
-    redirect '/login'
-  end
-end
-
 get '/logout' do
   session.clear
   @title = 'logout'
@@ -179,4 +170,31 @@ post '/new_user' do
     message: message
   }
   data.to_json
+end
+
+get '/menu' do
+  if session[:login_flag] == true
+    @userName = session[:user_name]
+    erb :menu
+  else
+    redirect '/login'
+  end
+end
+
+get '/user/edit' do
+  if session[:login_flag] == true
+    @userName = session[:user_name]
+    erb :user_edit
+  else
+    redirect '/login'
+  end
+end
+
+post '/user/delete' do
+  if session[:login_flag] == true
+    id = session[:user_id]
+    user = User.find(id)
+    user.destroy
+  end
+  redirect '/login'
 end
