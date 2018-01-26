@@ -27,6 +27,7 @@ end
 get '/menu' do
   if session[:login_flag] == true
     @userName = session[:user_name]
+    @thisPage = "Menu"
     erb :menu
   else
     redirect '/login'
