@@ -27,7 +27,6 @@ end
 get '/menu' do
   if session[:login_flag] == true
     @userName = session[:user_name]
-    @thisPage = "Menu"
     erb :menu
   else
     redirect '/login'
@@ -45,7 +44,7 @@ get '/login' do
   erb :login
 end
 
-post '/login' do
+post '/login' do  # sessionでuserName埋める?
   code = 0
   data = nil
   message = ""
@@ -86,6 +85,7 @@ post '/login' do
 
   if code == 1
     session[:login_flag] = true
+    session[:user_id] = user.id
     session[:user_name] = userName
   else
     session[:login_flag] = false
