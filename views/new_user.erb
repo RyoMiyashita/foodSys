@@ -1,0 +1,52 @@
+<div class="container">
+  <header class="header">
+    <h1>New User</h1>
+  </header><!-- .header -->
+</div><!-- .container -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card text-center">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">ログイン</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">新規User作成</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-block">
+          <form class="sign-up-form">
+            <div class="form-group row">
+              <label for="name-input" class="col-2 col-form-label">UserName</label>
+              <div class="col-10">
+                <input name="user_name" class="form-control" type="text" value="" id="name-input">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="password-input" class="col-2 col-form-label">Password</label>
+              <div class="col-10">
+                <input name="user_pass" class="form-control" type="password" value="" id="password-input">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="repassword-input" class="col-2 col-form-label">Password再入力</label>
+              <div class="col-10">
+                <input name="user_repass" class="form-control" type="password" value="" id="repassword-input">
+              </div>
+            </div>
+          </form><!-- .sign-up-form -->
+          <button type="button" class="btn btn-primary btn-sign-up">新規作成</button>
+        </div>
+        <div class="card-footer text-muted">
+          食品管理システム
+        </div>
+      </div>
+    </div><!-- .col-4 -->
+  </div>
+</div><!-- .container -->

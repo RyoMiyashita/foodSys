@@ -1,0 +1,87 @@
+<div class="container">
+  <header class="header">
+    <h1>Login</h1>
+  </header><!-- .header -->
+</div><!-- .container -->
+
+<div class="container">
+  <div class="card text-center">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a href="#tab_login" class="nav-link active" data-toggle="tab">ログイン</a>
+        </li>
+        <li class="nav-item">
+          <a href="#tab_sign-up" class="nav-link" data-toggle="tab">新規作成</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-block">
+      <div class="tab-content">
+        <div id="tab_login" class="tab-pane active">
+          <div class="alert alert-login collapse" role="alert">
+            <div class="alert-content">
+                <button type="button" class="close alert-close pull-right" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="alert-message"></div>
+            </div>
+          </div>
+          <form class="login-form">
+            <div class="form-group row">
+              <label for="name-input" class="col-2 col-form-label">UserName</label>
+              <div class="col-10">
+                <input name="user_name" class="form-control" type="text">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="password-input" class="col-2 col-form-label">Password</label>
+              <div class="col-10">
+                <input name="user_pass" class="form-control" type="password">
+              </div>
+            </div>
+          </form><!-- .login-form -->
+          <button type="button" class="btn btn-primary btn-login">ログイン</button>
+        </div>
+
+        <div id="tab_sign-up" class="tab-pane">
+          <div class="alert alert-sign-up collapse" role="alert">
+            <div class="alert-content">
+                <button type="button" class="close alert-close pull-right" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="alert-message"></div>
+            </div>
+          </div>
+          <form class="sign-up-form">
+            <div class="form-group row">
+              <label for="name-input" class="col-2 col-form-label">UserName</label>
+              <div class="col-10">
+                <input name="user_name" class="form-control" type="text">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="password-input" class="col-2 col-form-label">Password</label>
+              <div class="col-10">
+                <input name="user_pass" class="form-control" type="password">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="repassword-input" class="col-2 col-form-label">Password再入力</label>
+              <div class="col-10">
+                <input name="user_repass" class="form-control" type="password">
+              </div>
+            </div>
+          </form><!-- .sign-up-form -->
+          <button type="button" class="btn btn-primary btn-sign-up">新規作成</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      食品管理システム
+    </div>
+  </div>
+</div><!-- .container -->

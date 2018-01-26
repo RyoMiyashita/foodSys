@@ -1,0 +1,22 @@
+CREATE TABLE users(
+  id integer(2) PRIMARY KEY ,
+  user_name varchar(21) UNIQUE,
+  salt varchar(40),
+  hashed varchar(40),
+  algo char(5),
+  created_at datetime not null,
+  updated_at datetime not null
+);
+
+CREATE TABLE foods(
+  id integer PRIMARY KEY ,
+  user_id integer(2) UNIQUE,
+  name varchar(40),
+  number integer(1),
+  category varchar(40),
+  memo TEXT,
+  best_before_date datetime,
+  use_by datetime,
+  created_at datetime not null,
+  updated_at datetime not null
+);
