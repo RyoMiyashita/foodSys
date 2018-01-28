@@ -10,11 +10,18 @@ CREATE TABLE users(
 
 CREATE TABLE foods(
   id integer PRIMARY KEY ,
-  user_id integer(2) UNIQUE,
+  user_id integer(2),
   name varchar(40),
-  number integer(1),
   category varchar(40),
   memo TEXT,
+  created_at datetime not null,
+  updated_at datetime not null
+);
+
+CREATE TABLE details(
+  id integer PRIMARY KEY,
+  food_id integer(2),
+  number integer(1),
   best_before_date datetime,
   use_by datetime,
   created_at datetime not null,

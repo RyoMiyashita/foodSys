@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'active_record'
 require 'digest/md5'
-require 'date'
 
 set :environment, :production
 set :sessions,
@@ -140,8 +139,8 @@ post '/new_user' do
             newUser.hashed = hashed
             newUser.algo = algo
 
-            nowDateTime = DateTime.now
-            strDT = nowDateTime.strftime("%Y-%m-%d %H:%M:%S")
+            nowTime = Time.now
+            strDT = nowTime.strftime("%Y-%m-%d %H:%M:%S")
 
             newUser.created_at = strDT
             newUser.updated_at = strDT
@@ -175,6 +174,7 @@ end
 get '/menu' do
   if session[:login_flag] == true
     @userName = session[:user_name]
+    @title = 'Home'
     erb :menu
   else
     redirect '/login'
@@ -184,6 +184,7 @@ end
 get '/user/edit' do
   if session[:login_flag] == true
     @userName = session[:user_name]
+    @title = 'ユーザー編集'
     erb :user_edit
   else
     redirect '/login'
@@ -196,5 +197,16 @@ post '/user/delete' do
     user = User.find(id)
     user.destroy
   end
-  redirect '/login'
+  redirect '/logout'
+end
+
+get '/index' do
+  if session[:login_flag] == true
+    @userName = session[:user_name]
+    @foods = Food.where(user_id: session[:user_id])
+    @title = '一覧'
+    erb :foods_index
+  else
+    redirect '/login'
+  end
 end

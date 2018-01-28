@@ -1,0 +1,40 @@
+<%= erb :nav_bar %>
+<div class="container">
+  <header class="header">
+      <ol class="breadcrumb" style="display: inline-block;">
+        <li class="breadcrumb-item"><a href="/menu">Home</a></li>
+        <li class="breadcrumb-item active">
+          食品一覧
+        </li>
+      </ol>
+  </header><!-- .header -->
+</div><!-- .container -->
+
+<div class="container">
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>食品名</th>
+      <th>数量</th>
+      <th>カテゴリー</th>
+      <th>賞味期限</th>
+      <th>消費期限</th>
+      <th>昨日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @foods.each do |food| %>
+      <tr>
+        <th scope="row"><%= food.name %></th>
+        <td><%= food.number %></td>
+        <td><%= food.category %></td>
+        <td><%= food.best_before_date %></td>
+        <td><%= food.use_by %></td>
+        <td>
+          数量変更
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div><!-- .container -->
