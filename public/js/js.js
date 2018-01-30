@@ -1,6 +1,7 @@
 $(document).ready(function(){
   var $alertSignUp = $('.alert-sign-up');
   var $alertLogin = $('.alert-login');
+  var $alertNewFood = $('.alert-new-food');
 
   function postUser(data) {
     return $.ajax({
@@ -15,6 +16,15 @@ $(document).ready(function(){
     return $.ajax({
         type: 'POST',
         url:  '/login',
+        data : data,
+        dataType: "json"
+    })
+  }
+
+  function postNewFood(data) {
+    return $.ajax({
+        type: 'POST',
+        url:  '/food/new',
         data : data,
         dataType: "json"
     })
@@ -67,6 +77,35 @@ $(document).ready(function(){
             $alertLogin.find('.alert-message').html(result.message);
             $alertLogin.show();
             window.location.href = "/menu";
+        }
+    })
+    .fail(function() {
+        console.log( "error" );
+    })
+    .always(function() {
+        console.log( "always" );
+    });
+  });
+
+  $('.btn-new-food').on('click', function (){
+    var serialized = $('.new-food-form').serialize();
+
+    postNewFood(serialized).done(function(result) {
+        console.log("done");
+        console.log(result);
+        if (result.code < 0) { //ログイン失敗
+            $alertNewFood.removeClass('alert-success');
+            $alertNewFood.addClass('alert-warning');
+            // $alertNewFood.find('.alert-message').empty();
+            $alertNewFood.find('.alert-message').html(result.message);
+            $alertNewFood.show();
+        } else { // ログイン成功
+            $alertNewFood.removeClass('alert-warning');
+            $alertNewFood.addClass('alert-success');
+            // $alertNewFood.find('.alert-message').empty();
+            $alertNewFood.find('.alert-message').html(result.message);
+            $alertNewFood.show();
+            window.location.href = "/detail/edit/" + result.data;
         }
     })
     .fail(function() {

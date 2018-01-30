@@ -1,0 +1,44 @@
+<%= erb :nav_bar %>
+<div class="container">
+  <header class="header">
+    <ol class="breadcrumb" style="display: inline-block;">
+      <li class="breadcrumb-item">
+        <a href="/menu">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/index">食品一覧</a>
+      </li>
+      <li class="breadcrumb-item active">
+        食品追加
+      </li>
+    </ol>
+  </header><!-- .header -->
+</div><!-- .container -->
+
+<div class="container">
+  <div class="alert alert-new-food collapse" role="alert">
+    <div class="alert-content">
+        <button type="button" class="close alert-close pull-right" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="alert-message"></div>
+    </div>
+  </div>
+
+  <form class="new-food-form">
+    <div class="form-group row">
+      <label for="name-input" class="col-2 col-form-label">食品名</label>
+      <div class="col-10">
+        <input name="food_name" class="form-control" type="text">
+      </div>
+    </div>
+
+      <div class="form-group row">
+        <label for="category-input" class="col-2 col-form-label">カテゴリー</label>
+        <div class="col-10">
+          <input name="food_category" class="form-control" type="text">
+        </div>
+      </div>
+  </form>
+  <button type="button" class="btn btn-primary btn-new-food">食品追加</button>
+</div><!-- .container -->

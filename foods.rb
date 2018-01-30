@@ -17,6 +17,11 @@ end
 
 class Food < ActiveRecord::Base
   belongs_to :user
+  has_many :details
+end
+
+class Detail < ActiveRecord::Base
+  belongs_to :food
 end
 
 get '/' do
@@ -209,4 +214,63 @@ get '/index' do
   else
     redirect '/login'
   end
+end
+
+get '/food/new' do
+  if session[:login_flag] == true
+    @title = '新規食品作成'
+    @userName = session[:user_name]
+    erb :new_food
+  else
+    redirect '/login'
+  end
+end
+
+post '/food/new' do
+  code = 0
+  data = nil
+  message = ""
+
+  foodName = params[:food_name]
+  foodCategory = params[:food_category]
+
+  foodName = foodName.gsub(/<(.+?)>/, '&lt;\1&gt;')
+  foodCategory = foodCategory.gsub(/<(.+?)>/, '&lt;\1&gt;')
+
+  if code == 0
+    newFood = Food.new
+    id = ((Food.last.nil? ? 0 : Food.last.id) + 1)
+    newFood.id = id
+    newFood.user_id = session[:user_id]
+    newFood.name = foodName
+    newFood.category = foodCategory
+    nowTime = Time.now
+    strDT = nowTime.strftime("%Y-%m-%d %H:%M:%S")
+
+    newFood.created_at = strDT
+    newFood.updated_at = strDT
+    newFood.save
+    data = id
+    code = 1
+    message = "success new Food"
+  end
+
+  data = {
+    code: code,
+    data: data,
+    message: message
+  }
+  data.to_json
+end
+
+get '/detail/new/:id' do
+
+end
+
+post '/detail/new/:id' do
+
+end
+
+get '/clear/foods' do
+
 end

@@ -12,29 +12,30 @@
 
 <div class="container">
   <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>食品名</th>
-      <th>数量</th>
-      <th>カテゴリー</th>
-      <th>賞味期限</th>
-      <th>消費期限</th>
-      <th>昨日</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @foods.each do |food| %>
+    <thead>
       <tr>
-        <th scope="row"><%= food.name %></th>
-        <td><%= food.number %></td>
-        <td><%= food.category %></td>
-        <td><%= food.best_before_date %></td>
-        <td><%= food.use_by %></td>
-        <td>
-          数量変更
-        </td>
+        <th>食品名</th>
+        <th>数量</th>
+        <th>カテゴリー</th>
+        <th>賞味期限</th>
+        <th>消費期限</th>
+        <th>機能</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @foods.each do |food| %>
+        <tr>
+          <th scope="row"><%= food.name %></th>
+          <td><%= food.total_number %></td>
+          <td><%= food.category %></td>
+          <td><%= food.last_best_before_date %></td>
+          <td><%= food.last_use_by %></td>
+          <td>
+            <a class="" href="/detail/edit/<%= food.id %>">詳細</a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <a href="/food/new" class="btn btn-primary" role="button">食品追加</a>
 </div><!-- .container -->
