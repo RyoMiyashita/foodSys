@@ -18,7 +18,6 @@
         <th>数量</th>
         <th>カテゴリー</th>
         <th>賞味期限</th>
-        <th>消費期限</th>
         <th>機能</th>
       </tr>
     </thead>
@@ -29,9 +28,8 @@
           <td><%= food.total_number %></td>
           <td><%= food.category %></td>
           <td><%= food.last_best_before_date %></td>
-          <td><%= food.last_use_by %></td>
           <td>
-            <a class="" href="/detail/edit/<%= food.id %>">詳細</a>
+            <a class="" href="/details/edit/<%= food.id %>">詳細</a>
           </td>
         </tr>
       <% end %>

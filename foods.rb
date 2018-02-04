@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'active_record'
 require 'digest/md5'
+require 'date'
 
 set :environment, :production
 set :sessions,
@@ -144,12 +145,6 @@ post '/new_user' do
             newUser.hashed = hashed
             newUser.algo = algo
 
-            nowTime = Time.now
-            strDT = nowTime.strftime("%Y-%m-%d %H:%M:%S")
-
-            newUser.created_at = strDT
-            newUser.updated_at = strDT
-
             newUser.save
             code = 1
             message = "新規User作成 成功。ログインタブよりログインしてください。"
@@ -208,7 +203,8 @@ end
 get '/index' do
   if session[:login_flag] == true
     @userName = session[:user_name]
-    @foods = Food.where(user_id: session[:user_id])
+    @foods = Food.where(user_id: session[:user_id]).where.not(last_best_before_date: nil).order("last_best_before_date ASC")
+    @foods += Food.where(user_id: session[:user_id]).where(last_best_before_date: nil)
     @title = '一覧'
     erb :foods_index
   else
@@ -244,11 +240,6 @@ post '/food/new' do
     newFood.user_id = session[:user_id]
     newFood.name = foodName
     newFood.category = foodCategory
-    nowTime = Time.now
-    strDT = nowTime.strftime("%Y-%m-%d %H:%M:%S")
-
-    newFood.created_at = strDT
-    newFood.updated_at = strDT
     newFood.save
     data = id
     code = 1
@@ -263,14 +254,98 @@ post '/food/new' do
   data.to_json
 end
 
-get '/detail/new/:id' do
-
+get '/details/edit/:id' do
+  if session[:login_flag] == true
+    @title = '食品詳細編集'
+    @userName = session[:user_name]
+    @food = Food.find(params[:id])
+    @details = []
+    @beforeDetails = Detail.where(food_id: params[:id])
+    @beforeDetails.each_with_index do |item, i|
+      @details[i] = {
+        "id" => item.id,
+        "number" => item.number,
+        "best_before_date" => item.best_before_date.nil? ? nil : item.best_before_date.strftime('%Y %b %d (%a) %H:%M:%S')
+      }
+    end
+    erb :edit_details
+  else
+    redirect '/login'
+  end
 end
 
-post '/detail/new/:id' do
+post '/detail/edit/:id' do
+  if session[:login_flag] == true
+    food_id = params[:id]
+    number = params[:number]
+    best_before = params[:best_before]
 
+    number = number.gsub(/<(.+?)>/, '&lt;\1&gt;')
+
+    if best_before.empty?
+    best_before = nil
+    else
+      best_before = DateTime.parse(best_before)
+    end
+
+    newDetail = Detail.new
+    newDetail.id = ((Detail.last.nil? ? 0 : Detail.last.id) + 1)
+    newDetail.food_id = food_id
+    newDetail.number = number
+    newDetail.best_before_date = best_before
+    newDetail.save
+
+    food = Food.find(food_id)
+    arrayDetailsNumber = []
+    arrayDetailsNumber = Detail.where(food_id: food_id).pluck(:number)
+
+    food.total_number = 0
+    arrayDetailsNumber.each do |num|
+      food.total_number += num.to_i
+    end
+
+    targetDetail = Detail.where(food_id: food_id).where.not(number: -Float::INFINITY..0).order('best_before_date ASC').first
+
+    food.last_best_before_date =  targetDetail.nil? ? nil : targetDetail.best_before_date
+
+    food.save
+
+    redirect '/details/edit/' + food_id
+  else
+    redirect '/login'
+  end
 end
 
-get '/clear/foods' do
+post '/detail/number/' do
+  number = params[:number].to_i
+  detailId = params[:detailId].to_i
 
+  editedDetail = Detail.find(detailId)
+
+  editedDetail.number = number
+  foodId = editedDetail.food_id
+  editedDetail.save
+
+  food = Food.find(foodId)
+  arrayDetailsNumber = []
+  arrayDetailsNumber = Detail.where(food_id: foodId).pluck(:number)
+  puts arrayDetailsNumber
+
+  food.total_number = 0
+  arrayDetailsNumber.each do |num|
+    food.total_number += num
+  end
+
+  targetDetail = Detail.where(food_id: foodId).where.not(number: -Float::INFINITY..0).order('best_before_date ASC').first
+
+  food.last_best_before_date = targetDetail.nil? ? nil : targetDetail.best_before_date
+
+  food.save
+
+  data = {
+    code: 1,
+    data: foodId,
+    message: "success"
+  }
+  data.to_json
 end

@@ -2,6 +2,7 @@ $(document).ready(function(){
   var $alertSignUp = $('.alert-sign-up');
   var $alertLogin = $('.alert-login');
   var $alertNewFood = $('.alert-new-food');
+  var $addDetail = $('#add-detail').html();
 
   function postUser(data) {
     return $.ajax({
@@ -105,7 +106,7 @@ $(document).ready(function(){
             // $alertNewFood.find('.alert-message').empty();
             $alertNewFood.find('.alert-message').html(result.message);
             $alertNewFood.show();
-            window.location.href = "/detail/edit/" + result.data;
+            window.location.href = "/details/edit/" + result.data;
         }
     })
     .fail(function() {
@@ -120,5 +121,29 @@ $(document).ready(function(){
     console.log('here');
     var $this = $(this);
     $this.parents('.alert').hide();
-  })
+  });
+
+  $('.btn-add-detail').on('click', function () {
+    console.dir($addDetail);
+    $('.add-box').html($addDetail);
+  });
+
+  $('.btn-save').on('click', function () {
+    $.ajax({
+      url:'/detail/number/',
+      type:'POST',
+      data:{
+          'number':$(this).parents('tr').find('input.number').val(),
+          'detailId':$(this).parents('tr').data('detail-id')
+      },
+      dataType: "json"
+    })
+    .done(function(result){
+        console.log(result);
+        window.location.href = "/details/edit/" + result.data;
+    })
+    .fail(function(result){
+        console.log(result);
+    });
+  });
 });

@@ -3,9 +3,7 @@ CREATE TABLE users(
   user_name varchar(21) UNIQUE,
   salt varchar(40),
   hashed varchar(40),
-  algo char(5),
-  created_at datetime not null,
-  updated_at datetime not null
+  algo char(5)
 );
 
 CREATE TABLE foods(
@@ -15,18 +13,12 @@ CREATE TABLE foods(
   category varchar(40),
   memo TEXT,
   total_number integer(1),
-  last_best_before_date datetime,
-  last_use_by datetime,
-  created_at datetime not null,
-  updated_at datetime not null
+  last_best_before_date datetime
 );
 
 CREATE TABLE details(
   id integer PRIMARY KEY,
   food_id integer(2),
-  number integer(1),
-  best_before_date datetime,
-  use_by datetime,
-  created_at datetime not null,
-  updated_at datetime not null
+  number integer(4),
+  best_before_date datetime
 );
