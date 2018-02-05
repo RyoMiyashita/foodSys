@@ -43,12 +43,22 @@
         <tbody>
           <% if !@details.nil? %>
             <% @details.each do |detail| %>
-              <tr data-detail-id="<%= detail["id"] %>">
+              <!-- <tr data-detail-id="<%= detail["id"] %>">
                 <td>
                   <div class="col-4">
                     <input name="number" class="form-control number" type="number" value="<%= detail["number"] %>"></td>
-                  </div><!-- .col-4 -->
+                  </div>.col-4
                 <td><%= detail["best_before_date"] %></td>
+                <td>
+                  <button class="btn btn-primary btn-save">変更を保存</button>
+                </td>
+              </tr> -->
+              <tr data-detail-id="<%= detail.id %>">
+                <td>
+                  <div class="col-4">
+                    <input name="number" class="form-control number" type="number" value="<%= detail.number %>"></td>
+                  </div>
+                <td><%= detail.best_before_date.nil? ? nil : detail.best_before_date.strftime('%Y %b %d (%a)%H:%M:%S') %></td>
                 <td>
                   <button class="btn btn-primary btn-save">変更を保存</button>
                 </td>

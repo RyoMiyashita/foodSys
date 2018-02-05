@@ -260,14 +260,15 @@ get '/details/edit/:id' do
     @userName = session[:user_name]
     @food = Food.find(params[:id])
     @details = []
-    @beforeDetails = Detail.where(food_id: params[:id])
-    @beforeDetails.each_with_index do |item, i|
-      @details[i] = {
-        "id" => item.id,
-        "number" => item.number,
-        "best_before_date" => item.best_before_date.nil? ? nil : item.best_before_date.strftime('%Y %b %d (%a) %H:%M:%S')
-      }
-    end
+    @details = Detail.where(food_id: params[:id])
+#    @beforeDetails = Detail.where(food_id: params[:id])
+#    @beforeDetails.each_with_index do |item, i|
+#      @details[i] = {
+#        "id" => item.id,
+#        "number" => item.number,
+#        "best_before_date" => item.best_before_date.nil? ? #nil : item.best_before_date.strftime('%Y %b %d (%a) #%H:%M:%S')
+#      }
+#    end
     erb :edit_details
   else
     redirect '/login'

@@ -27,7 +27,7 @@
           <th scope="row"><%= food.name %></th>
           <td><%= food.total_number %></td>
           <td><%= food.category %></td>
-          <td><%= food.last_best_before_date %></td>
+          <td><%= food.last_best_before_date.nil? ? nil : food.last_best_before_date.strftime('%Y %b %d (%a) %H:%M:%S') %></td>
           <td>
             <a class="" href="/details/edit/<%= food.id %>">詳細</a>
           </td>
